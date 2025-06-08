@@ -1,7 +1,6 @@
 import pickle
 import streamlit as st
 import numpy as np
-from sklearn.metrics import accuracy_score
 
 @st.cache_resource
 def load_all():
@@ -14,15 +13,7 @@ def load_all():
     with open("test_data.pkl", "rb") as f:
         X_test, y_test = pickle.load(f)
     return pt, scaler, model, X_test, y_test
-
 pt, scaler, model, X_test, y_test = load_all()
-
-# Calculate and display accuracy
-X_test_pt = pt.transform(X_test)
-X_test_scaled = scaler.transform(X_test_pt)
-y_pred = model.predict(X_test_scaled)
-accuracy = accuracy_score(y_test, y_pred)
-st.sidebar.metric("Model Accuracy", f"{accuracy:.2%}")
 
 st.title("Smart Loan Approval Predictor")
 st.markdown(
@@ -84,3 +75,6 @@ if st.session_state.show_form:
             st.success("Congratulations! Your loan is likely to be approved.")
         else:
             st.error("Sorry, your loan may not be approved based on the current details.")
+
+
+
